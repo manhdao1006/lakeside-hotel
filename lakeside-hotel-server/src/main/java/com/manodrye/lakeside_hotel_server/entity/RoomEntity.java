@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import lombok.Getter;
 @Getter
 @Setter
 @AllArgsConstructor
+@Table(name = "room")
 public class RoomEntity {
 
     @Id
@@ -43,7 +45,7 @@ public class RoomEntity {
     @Lob
     private Blob photo;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoomEntity> bookings;
 
     public RoomEntity(){

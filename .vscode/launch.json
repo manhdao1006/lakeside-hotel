@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LakesideHotelServerApplication<lakeside-hotel-server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.manodrye.lakeside_hotel_server.LakesideHotelServerApplication",
+            "projectName": "lakeside-hotel-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
