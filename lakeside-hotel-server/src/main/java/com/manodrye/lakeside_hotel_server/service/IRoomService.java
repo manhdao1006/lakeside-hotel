@@ -1,6 +1,11 @@
 package com.manodrye.lakeside_hotel_server.service;
 
-public interface IRoomService {
+import java.math.BigDecimal;
 
-    
+import org.springframework.web.multipart.MultipartFile;
+
+import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
+
+public interface IRoomService {
+    RoomEntity addNewRoom(MultipartFile photo, String roomType, BigDecimal roomPrice);
 }
