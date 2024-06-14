@@ -8,7 +8,7 @@ const AddRoom = () => {
     const [newRoom, setNewRoom] = useState({
       photo : null,
       roomType : '',
-      roomPrice : ''
+      roomPrice : null
     });
 
     const [imagePreview, setImagePreview] = useState('')
@@ -24,7 +24,7 @@ const AddRoom = () => {
         if(!isNaN(value)){
           value.parseInt(value)
         } else {
-          value = ''
+          value = null
         }
       }
       setNewRoom({ ...newRoom, [name]: value })
@@ -75,6 +75,7 @@ const AddRoom = () => {
               <label htmlFor='roomPrice' className='form-label'>Room Price</label>
               <input
                 className='form-control'
+                required
                 id='roomPrice'
                 type='number'
                 name='roomPrice'
