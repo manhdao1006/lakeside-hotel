@@ -32,6 +32,7 @@ const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
     {roomTypes.length > 0 && (
         <div>
             <select
+                required
                 className='form-select'
                 name = 'roomType'
                 id = 'roomType'

@@ -11,30 +11,30 @@ const AddRoom = () => {
       roomPrice : null
     });
 
-    const [imagePreview, setImagePreview] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [imagePreview, setImagePreview] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleRoomInputChange = (e) => {
       
-      const name = e.target.name
-      let value = e.target.value
+      const name = e.target.name;
+      let value = e.target.value;
 
       if(name === 'roomPrice'){
         if(!isNaN(value)){
-          value.parseInt(value)
+          value = parseFloat(value);
         } else {
-          value = null
+          value = null;
         }
       }
-      setNewRoom({ ...newRoom, [name]: value })
+      setNewRoom({ ...newRoom, [name]: value });
     }
 
     const handleImageChange = (e) => {
 
-      const selectedImage = e.target.files[0]
-      setNewRoom({...newRoom, photo: selectedImage})
-      setImagePreview(URL.createObjectURL(selectedImage))
+      const selectedImage = e.target.files[0];
+      setNewRoom({...newRoom, photo: selectedImage});
+      setImagePreview(URL.createObjectURL(selectedImage));
     }
 
     const handleSubmit = async(e) => {
@@ -43,16 +43,21 @@ const AddRoom = () => {
       try {
         const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice);
         if(success !== undefined){
-          setSuccessMessage('A new room was added to the database')
-          setNewRoom({photo: null, roomType: '', roomPrice: ''})
-          setImagePreview('')
-          setErrorMessage('')
+          setSuccessMessage('A new room was added to the database');
+          setNewRoom({photo: null, roomType: '', roomPrice: ''});
+          setImagePreview('');
+          setErrorMessage('');
         } else {
-          setErrorMessage('Error adding room')
+          setErrorMessage('Error adding room');
         }
       } catch (error) {
-        setErrorMessage(error.message)
+        setErrorMessage(error.message);
       }
+
+      setTimeout(() => {
+        setSuccessMessage('');
+        setErrorMessage('');
+      }, 3000);
     }
 
   return (
@@ -62,6 +67,13 @@ const AddRoom = () => {
 
         <div className='col-md-8 col-lg-6'>
           <h2 className='mt-5 mb-2'>Add a New Room</h2>
+          {successMessage && (
+            <div className='alert alert-success fade show'>{successMessage}</div>
+          )}
+
+          {errorMessage && (
+            <div className='alert alert-danger fade show'>{errorMessage}</div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>

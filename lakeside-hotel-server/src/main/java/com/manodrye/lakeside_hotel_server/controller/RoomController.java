@@ -1,6 +1,7 @@
 package com.manodrye.lakeside_hotel_server.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,11 @@ import com.manodrye.lakeside_hotel_server.service.IRoomService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/rooms")
@@ -30,5 +36,10 @@ public class RoomController {
         RoomDTO roomDTO = new RoomDTO(savedRoom.getId(), savedRoom.getRoomType(), savedRoom.getRoomPrice());
         
         return ResponseEntity.ok(roomDTO);
+    }
+
+    @GetMapping("/room-types")
+    public List<String> getRoomTypes(){
+        return roomService.getAllRoomTypes();
     }
 }
