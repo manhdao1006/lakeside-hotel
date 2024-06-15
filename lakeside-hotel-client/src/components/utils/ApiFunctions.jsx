@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 export const api = axios.create({
   baseURL : "http://localhost:9192"
@@ -33,7 +33,7 @@ export async function getRoomTypes() {
 export async function getAllRooms(){
   try {
     const response = await api.get("/api/rooms/all-rooms");
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error("Error fetching rooms");
   }

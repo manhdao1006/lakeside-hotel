@@ -70,11 +70,11 @@ public class RoomController {
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
         List<BookedRoomEntity> bookedRoomEntities = bookedRoomService.getAllBookedByRoomId(roomEntity.getId());
-        List<BookedRoomDTO> bookedInfo = bookedRoomEntities.stream()
-                                                           .map(booked -> new BookedRoomDTO(booked.getBookingId(), 
-                                                                                            booked.getCheckInDate(), 
-                                                                                            booked.getCheckOutDate(), 
-                                                                                            booked.getBookingConfirmationCode())).toList();
+        // List<BookedRoomDTO> bookedInfo = bookedRoomEntities.stream()
+        //                                                    .map(booked -> new BookedRoomDTO(booked.getBookingId(), 
+        //                                                                                     booked.getCheckInDate(), 
+        //                                                                                     booked.getCheckOutDate(), 
+        //                                                                                     booked.getBookingConfirmationCode())).toList();
         byte[] photoBytes = null;
         Blob photoBlob = roomEntity.getPhoto();
         if(photoBlob != null){
@@ -84,6 +84,6 @@ public class RoomController {
                 throw new PhotoRetrievalException("Error retrieving photo");
             }
         }
-        return new RoomDTO(roomEntity.getId(), roomEntity.getRoomType(), roomEntity.getRoomPrice(), roomEntity.isBooked(), photoBytes, bookedInfo);
+        return new RoomDTO(roomEntity.getId(), roomEntity.getRoomType(), roomEntity.getRoomPrice(), roomEntity.isBooked(), photoBytes);
     }    
 }

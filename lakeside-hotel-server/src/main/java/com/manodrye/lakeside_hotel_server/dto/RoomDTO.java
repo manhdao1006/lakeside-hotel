@@ -24,13 +24,12 @@ public class RoomDTO {
         this.roomPrice = roomPrice;
     }
 
-    public RoomDTO(Long id, String roomType, BigDecimal roomPrice, boolean isBooked, byte[] photoBytes,
-            List<BookedRoomDTO> bookings) {
+    public RoomDTO(Long id, String roomType, BigDecimal roomPrice, boolean isBooked, byte[] photoBytes) {
         this.id = id;
         this.roomType = roomType;
         this.roomPrice = roomPrice;
         this.isBooked = isBooked;
         this.photo = photoBytes != null ? Base64.encodeBase64String(photoBytes) : null;
-        this.bookings = bookings;
+        // this.bookings = bookings;
     }    
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { getRoomTypes } from '../utils/ApiFunctions';
 
 const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {

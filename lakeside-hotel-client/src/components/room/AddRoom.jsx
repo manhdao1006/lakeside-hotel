@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { addRoom } from '../utils/ApiFunctions'
-import RoomTypeSelector from '../common/RoomTypeSelector'
+import { useState } from 'react';
+import { addRoom } from '../utils/ApiFunctions';
+import RoomTypeSelector from '../common/RoomTypeSelector';
 
 const AddRoom = () => {
 
