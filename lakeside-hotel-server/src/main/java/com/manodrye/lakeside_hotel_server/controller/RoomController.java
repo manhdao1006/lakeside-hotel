@@ -52,7 +52,7 @@ public class RoomController {
         return roomService.getAllRoomTypes();
     }
 
-    @GetMapping("path")
+    @GetMapping("/all-rooms")
     public ResponseEntity<List<RoomDTO>> getAllRooms() {
         List<RoomEntity> roomEntities = roomService.getAllRooms();
         List<RoomDTO> roomDTOs = new ArrayList<>();
