@@ -102,7 +102,7 @@ const EditRoom = () => {
             </div>
 
             <div className='mb-3'>
-              <label htmlFor='photo' className='form-label'>Room Photo</label>
+              <label htmlFor='photo' className='form-label hotel-color'>Room Photo</label>
               <input
                 className='form-control'
                 id='photo'

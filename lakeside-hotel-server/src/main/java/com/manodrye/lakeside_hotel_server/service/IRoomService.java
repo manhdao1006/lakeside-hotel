@@ -2,6 +2,7 @@ package com.manodrye.lakeside_hotel_server.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,4 +16,5 @@ public interface IRoomService {
     byte[] getRoomPhotoByRoomId(Long roomId);
     void deleteRoom(Long roomId);
     RoomEntity updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes);
+    Optional<RoomEntity> getRoomById(Long roomId);
 }

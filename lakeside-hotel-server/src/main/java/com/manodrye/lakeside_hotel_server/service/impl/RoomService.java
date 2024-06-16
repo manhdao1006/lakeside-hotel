@@ -101,5 +101,10 @@ public class RoomService implements IRoomService{
         }
         
         return roomRepository.save(roomEntity);
+    }
+
+    @Override
+    public Optional<RoomEntity> getRoomById(Long roomId) {
+        return Optional.of(roomRepository.findById(roomId).get());
     }    
 }

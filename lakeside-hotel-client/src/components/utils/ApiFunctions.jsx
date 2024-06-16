@@ -56,7 +56,7 @@ export async function updateRoom(roomId, roomData){
   formData.append('roomPrice', roomData.roomPrice);
   formData.append('photo', roomData.photo);
 
-  const response = await api.put(`/api/rooms/update/room/${roomId}`);
+  const response = await api.put(`/api/rooms/update/room/${roomId}`, formData);
   return response;
 }
 

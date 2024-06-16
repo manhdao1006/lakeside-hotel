@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { addRoom } from '../utils/ApiFunctions';
 import RoomTypeSelector from '../common/RoomTypeSelector';
+import { Link } from 'react-router-dom';
+
 
 const AddRoom = () => {
 
@@ -37,8 +39,8 @@ const AddRoom = () => {
     }
 
     const handleSubmit = async (e) => {
-
       e.preventDefault();
+
       try {
         const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice);
         if(success !== undefined){
@@ -106,8 +108,8 @@ const AddRoom = () => {
               />
               {imagePreview && (
                 <img
-                  className='mb-3 mt-5'
-                  src={imagePreview} 
+                  className='mt-3'
+                  src={imagePreview}
                   alt='Preview Room Photo' 
                   style={{ maxWidth: '400px', maxHeight: '400px' }}
                 />
@@ -115,8 +117,9 @@ const AddRoom = () => {
 
             </div>
 
-            <div className='d-grid d-md-flex mt-2'>
-              <button className='btn btn-outline-primary ml-5'>Save Room</button>
+            <div className='d-grid gap-2 d-md-flex mt-2'>
+              <Link to={'/existing-rooms'} className='btn btn-outline-info ml-5'>Back</Link>
+              <button type='submit' className='btn btn-outline-primary'>Save Room</button>
             </div>
 
           </form>
