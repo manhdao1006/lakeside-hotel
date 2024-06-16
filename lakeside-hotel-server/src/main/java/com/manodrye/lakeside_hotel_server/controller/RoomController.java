@@ -1,14 +1,17 @@
 package com.manodrye.lakeside_hotel_server.controller;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +32,9 @@ import com.manodrye.lakeside_hotel_server.service.IRoomService;
 import com.manodrye.lakeside_hotel_server.exception.PhotoRetrievalException;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -74,6 +80,22 @@ public class RoomController {
     public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId){
         roomService.deleteRoom(roomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("update/room/{roomId}")
+    public ResponseEntity<RoomDTO> updateRoom(@PathVariable Long roomId,
+                                              @RequestParam(required = false) String roomType,
+                                              @RequestParam(required = false) BigDecimal roomPrice,
+                                              @RequestParam(required = false) MultipartFile photo) throws IOException, SerialException, SQLException {
+        
+                                                byte[] photoBytes = (photo != null && !photo.isEmpty()) ? photo.getBytes() : roomService.getRoomPhotoByRoomId(roomId);
+        Blob photoBlob = (photoBytes != null && photoBytes.length > 0) ? new SerialBlob(photoBytes) : null;
+        RoomEntity roomEntity = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
+        roomEntity.setPhoto(photoBlob);
+
+        RoomDTO roomDTO = getRoomDTO(roomEntity);                                                
+        return ResponseEntity.ok(roomDTO);
+
     }
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {

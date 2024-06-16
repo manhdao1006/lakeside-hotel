@@ -16,6 +16,7 @@ import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
 import com.manodrye.lakeside_hotel_server.repository.RoomRepository;
 import com.manodrye.lakeside_hotel_server.service.IRoomService;
 import com.manodrye.lakeside_hotel_server.exception.ResourceNotFoundException;
+import com.manodrye.lakeside_hotel_server.exception.InternalServerException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -79,5 +80,26 @@ public class RoomService implements IRoomService{
         if(theRoom.isPresent()){
             roomRepository.deleteById(roomId);
         }
+    }
+
+    @Override
+    public RoomEntity updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+        RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        
+        if(roomType != null){
+            roomEntity.setRoomType(roomType);
+        }
+        if(roomPrice != null){
+            roomEntity.setRoomPrice(roomPrice);
+        }
+        if(photoBytes != null && photoBytes.length > 0){
+            try {
+                roomEntity.setPhoto(new SerialBlob(photoBytes));
+            } catch (SQLException e) {
+                throw new InternalServerException("Error updating room");
+            }
+        }
+        
+        return roomRepository.save(roomEntity);
     }    
 }

@@ -14,4 +14,5 @@ public interface IRoomService {
     List<RoomEntity> getAllRooms();
     byte[] getRoomPhotoByRoomId(Long roomId);
     void deleteRoom(Long roomId);
+    RoomEntity updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes);
 }
