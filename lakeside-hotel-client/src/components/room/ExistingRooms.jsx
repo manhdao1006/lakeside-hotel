@@ -21,7 +21,7 @@ const ExistingRooms = () => {
       fetchRooms();
     }, []);
 
-    const fetchRooms = async() => {
+    const fetchRooms = async () => {
       setIsLoading(true);
       try {
         const response = await getAllRooms();
@@ -48,7 +48,7 @@ const ExistingRooms = () => {
       setCurrentPage(pageNumber);
     }
 
-    const handleDelete = async(roomId) => {
+    const handleDelete = async (roomId) => {
       try {
         const response = await deleteRoom(roomId);
         if(response.data === ''){
