@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,10 +29,6 @@ import com.manodrye.lakeside_hotel_server.service.IRoomService;
 import com.manodrye.lakeside_hotel_server.exception.PhotoRetrievalException;
 
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-
 
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -66,6 +68,12 @@ public class RoomController {
             }
         }
         return ResponseEntity.ok(roomDTOs);
+    }
+
+    @DeleteMapping("/delete/room/{roomId}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId){
+        roomService.deleteRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
