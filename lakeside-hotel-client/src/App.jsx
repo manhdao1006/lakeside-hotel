@@ -5,6 +5,8 @@ import ExistingRooms from './components/room/ExistingRooms';
 import Home from './components/home/Home';
 import EditRoom from './components/room/EditRoom';
 import AddRoom from './components/room/AddRoom';
+import NavBar from './components/layout/NavBar';
+import Footer from './components/layout/Footer';
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
     <>
     <main>
       <Router>
+        <NavBar />
         <Routes>
           <Route path='/' element={ <Home /> } />
           <Route path='/add-room' element={ <AddRoom /> } />
@@ -19,6 +22,8 @@ function App() {
           <Route path='/existing-rooms' element={ <ExistingRooms /> } />
         </Routes>
       </Router>
+      
+      <Footer />
     </main>
     </>
   )

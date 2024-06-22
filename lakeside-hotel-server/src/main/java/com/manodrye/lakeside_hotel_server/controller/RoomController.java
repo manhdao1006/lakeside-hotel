@@ -90,7 +90,7 @@ public class RoomController {
                                               @RequestParam(required = false) BigDecimal roomPrice,
                                               @RequestParam(required = false) MultipartFile photo) throws IOException, SerialException, SQLException {
         
-                                                byte[] photoBytes = (photo != null && !photo.isEmpty()) ? photo.getBytes() : roomService.getRoomPhotoByRoomId(roomId);
+        byte[] photoBytes = (photo != null && !photo.isEmpty()) ? photo.getBytes() : roomService.getRoomPhotoByRoomId(roomId);
         Blob photoBlob = (photoBytes != null && photoBytes.length > 0) ? new SerialBlob(photoBytes) : null;
         RoomEntity roomEntity = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
         roomEntity.setPhoto(photoBlob);
