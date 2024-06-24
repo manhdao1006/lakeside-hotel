@@ -26,17 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.manodrye.lakeside_hotel_server.dto.BookedRoomDTO;
+import com.manodrye.lakeside_hotel_server.dto.BookingRoomDTO;
 import com.manodrye.lakeside_hotel_server.dto.RoomDTO;
-import com.manodrye.lakeside_hotel_server.entity.BookedRoomEntity;
+import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
-import com.manodrye.lakeside_hotel_server.service.IBookedRoomService;
+import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
 import com.manodrye.lakeside_hotel_server.service.IRoomService;
 import com.manodrye.lakeside_hotel_server.exception.PhotoRetrievalException;
 import com.manodrye.lakeside_hotel_server.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
-
 
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -45,7 +44,7 @@ import lombok.RequiredArgsConstructor;
 public class RoomController {
 
     private final IRoomService roomService;
-    private final IBookedRoomService bookedRoomService;
+    private final IBookingRoomService bookedRoomService;
 
     @PostMapping("/add/new-room")    
     public ResponseEntity<RoomDTO> addNewRoom(@RequestParam("photo") MultipartFile photo, 
@@ -84,7 +83,7 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("update/room/{roomId}")
+    @PutMapping("/update/room/{roomId}")
     public ResponseEntity<RoomDTO> updateRoom(@PathVariable Long roomId,
                                               @RequestParam(required = false) String roomType,
                                               @RequestParam(required = false) BigDecimal roomPrice,
@@ -110,7 +109,7 @@ public class RoomController {
     }
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
-        List<BookedRoomEntity> bookedRoomEntities = bookedRoomService.getAllBookedByRoomId(roomEntity.getId());
+        List<BookingRoomEntity> bookedRoomEntities = bookedRoomService.getAllBookedByRoomId(roomEntity.getId());
         // List<BookedRoomDTO> bookedInfo = bookedRoomEntities.stream()
         //                                                    .map(booked -> new BookedRoomDTO(booked.getBookingId(), 
         //                                                                                     booked.getCheckInDate(), 

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookedRoomDTO {
+public class BookingRoomDTO {
     private Long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -21,7 +21,7 @@ public class BookedRoomDTO {
     private String bookingConfirmationCode;
     private RoomDTO room;
 
-    public BookedRoomDTO(Long id, LocalDate checkInDate, LocalDate checkOutDate,
+    public BookingRoomDTO(Long id, LocalDate checkInDate, LocalDate checkOutDate,
             String bookingConfirmationCode) {
         this.id = id;
         this.checkInDate = checkInDate;

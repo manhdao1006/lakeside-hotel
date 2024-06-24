@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "booked_room")
-public class BookedRoomEntity {
+public class BookingRoomEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

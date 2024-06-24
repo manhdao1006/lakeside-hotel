@@ -46,13 +46,13 @@ public class RoomEntity {
     private Blob photo;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BookedRoomEntity> bookings;
+    private List<BookingRoomEntity> bookings;
 
     public RoomEntity(){
         this.bookings = new ArrayList<>();
     }
 
-    public void addBooking(BookedRoomEntity bookingEntity){
+    public void addBooking(BookingRoomEntity bookingEntity){
         if(bookings == null){
             bookings = new ArrayList<>();
         }

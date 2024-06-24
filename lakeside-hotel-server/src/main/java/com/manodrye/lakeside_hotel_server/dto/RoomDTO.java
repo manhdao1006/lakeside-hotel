@@ -16,7 +16,7 @@ public class RoomDTO {
     private BigDecimal roomPrice;
     private boolean isBooked;
     private String photo;
-    private List<BookedRoomDTO> bookings;
+    private List<BookingRoomDTO> bookings;
     
     public RoomDTO(Long id, String roomType, BigDecimal roomPrice) {
         this.id = id;
