@@ -8,7 +8,6 @@ import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
 import com.manodrye.lakeside_hotel_server.exception.InvalidBookingRequestException;
 import com.manodrye.lakeside_hotel_server.repository.BookingRoomRepository;
-import com.manodrye.lakeside_hotel_server.repository.RoomRepository;
 import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
 import com.manodrye.lakeside_hotel_server.service.IRoomService;
 
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class BookingRoomService implements IBookingRoomService{
 
     private final BookingRoomRepository bookingRoomRepository;
-    private final RoomRepository roomRepository;
     private final IRoomService roomService;
 
     @Override
