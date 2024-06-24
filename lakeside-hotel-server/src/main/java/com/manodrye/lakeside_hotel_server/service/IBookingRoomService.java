@@ -6,7 +6,7 @@ import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 
 public interface IBookingRoomService {
 
-    List<BookingRoomEntity> getAllBookedByRoomId(Long roomId);
+    List<BookingRoomEntity> getAllBookingsByRoomId(Long roomId);
 
     List<BookingRoomEntity> getAllBookings();
 

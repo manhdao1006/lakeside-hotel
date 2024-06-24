@@ -75,7 +75,7 @@ public class BookingRoomController {
     }
 
     private BookingRoomDTO getBookingDTO(BookingRoomEntity bookingRoomEntity) {
-        RoomEntity roomEntity = roomService.getRoomById(bookingRoomEntity.getRoom().getId().get());
+        RoomEntity roomEntity = roomService.getRoomById(bookingRoomEntity.getRoom().getId()).get();
         RoomDTO roomDTO = new RoomDTO(roomEntity.getId(), roomEntity.getRoomType(), roomEntity.getRoomPrice());
 
         return new BookingRoomDTO(bookingRoomEntity.getBookingId(),

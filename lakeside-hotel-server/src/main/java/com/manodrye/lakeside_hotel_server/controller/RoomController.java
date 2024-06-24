@@ -44,7 +44,7 @@ import lombok.RequiredArgsConstructor;
 public class RoomController {
 
     private final IRoomService roomService;
-    private final IBookingRoomService bookedRoomService;
+    private final IBookingRoomService bookingRoomService;
 
     @PostMapping("/add/new-room")    
     public ResponseEntity<RoomDTO> addNewRoom(@RequestParam("photo") MultipartFile photo, 
@@ -109,12 +109,12 @@ public class RoomController {
     }
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
-        List<BookingRoomEntity> bookedRoomEntities = bookedRoomService.getAllBookedByRoomId(roomEntity.getId());
-        // List<BookedRoomDTO> bookedInfo = bookedRoomEntities.stream()
-        //                                                    .map(booked -> new BookedRoomDTO(booked.getBookingId(), 
-        //                                                                                     booked.getCheckInDate(), 
-        //                                                                                     booked.getCheckOutDate(), 
-        //                                                                                     booked.getBookingConfirmationCode())).toList();
+        List<BookingRoomEntity> bookingRoomEntities = bookingRoomService.getAllBookingsByRoomId(roomEntity.getId());
+        // List<BookingRoomDTO> bookingInfo = bookingRoomEntities.stream()
+        //                                                    .map(booking -> new BookingRoomDTO(booking.getBookingId(), 
+        //                                                                                     booking.getCheckInDate(), 
+        //                                                                                     booking.getCheckOutDate(), 
+        //                                                                                     booking.getBookingConfirmationCode())).toList();
         byte[] photoBytes = null;
         Blob photoBlob = roomEntity.getPhoto();
         if(photoBlob != null){
