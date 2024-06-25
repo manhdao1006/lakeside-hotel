@@ -9,7 +9,7 @@ const BookingSuccess = () => {
 
   return (
     <div className='container'>
-        <Header title={'Booking Success'} />
+        <Header title='Booking Success' />
         <div className='mt-5'>
             {message ? (
                 <div>

@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "booked_room")
+@Table(name = "booking_room")
 public class BookingRoomEntity {
 
     @Id
@@ -31,7 +31,7 @@ public class BookingRoomEntity {
     @Column(name = "check_in")
     private LocalDate checkInDate;
 
-    @Column(name = "chek_out")
+    @Column(name = "check_out")
     private LocalDate checkOutDate;
 
     @Column(name = "guest_fullname")

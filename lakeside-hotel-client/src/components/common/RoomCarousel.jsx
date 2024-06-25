@@ -15,7 +15,6 @@ const RoomCarousel = () => {
         getAllRooms().then((response) => {
             setRooms(response.data);
             setIsLoading(false);
-            console.log(response.data);
         }).catch((error) => {
             setErrorMessage(error.message);
             setIsLoading(false);
@@ -44,7 +43,7 @@ const RoomCarousel = () => {
                         {rooms.slice(index * 4, index * 4 + 4).map((room) => (
                             <Col key={room.id} className='mb-4' xs={12} md={6} lg={3}>
                                 <Card>
-                                    <Link to={`/bookings/${room.id}`}>
+                                    <Link to={`/book-room/${room.id}`}>
                                         <Card.Img
                                             variant='top'
                                             src={`data:image/png;base64, ${room.photo}`}
@@ -58,7 +57,7 @@ const RoomCarousel = () => {
                                         <Card.Title className='hotel-color'>{room.roomType}</Card.Title>
                                         <Card.Title className='room-price'>${room.roomPrice}</Card.Title>
                                         <div className='flex-shrink-0'>
-                                            <Link to={`/bookings/${room.id}`} className='btn btn-hotel btn-sm'>
+                                            <Link to={`/book-room/${room.id}`} className='btn btn-hotel btn-sm'>
                                                 Book Now
                                             </Link>
                                         </div>

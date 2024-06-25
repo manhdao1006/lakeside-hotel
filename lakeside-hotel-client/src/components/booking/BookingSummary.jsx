@@ -34,15 +34,15 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
     <div className='card card-body mt-5'>
         <h4>Reservation Summary</h4>
 
-        <p>FullName: <strong>{booking.guestName}</strong></p>
+        <p>Name: <strong>{booking.guestFullName}</strong></p>
         <p>Email: <strong>{booking.guestEmail}</strong></p>
-        <p>Check-In Date: <strong>{moment(booking.checkInDate).format('MMM Do YYYY')}</strong></p>
-        <p>Check-Out Date: <strong>{moment(booking.checkOutDate).format('MMM Do YYYY')}</strong></p>
+        <p>Check-in Date: <strong>{moment(booking.checkInDate).format('MMM Do YYYY')}</strong></p>
+        <p>Check-out Date: <strong>{moment(booking.checkOutDate).format('MMM Do YYYY')}</strong></p>
         <p>Number of Days Booked: <strong>{numberOfDays}</strong></p>
         <div>
             <h5>Number of Guests</h5>
-            <strong>Adult{booking.numberOfAdults > 1 ? 's' : ''}: {booking.numberOfAdults}</strong>
-            <strong>Children: {booking.numberOfChildren}</strong>
+            <strong>Adult{booking.numOfAdults > 1 ? 's' : ''}: {booking.numOfAdults}</strong>
+            <strong><p>Children: {booking.numOfChildren}</p></strong>
         </div>
 
         {payment > 0 ? (
@@ -64,7 +64,7 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
                                 Booking Confirmed, redirecting to payment ...
                             </>
                         ) : (
-                            'Confirm Booking and proceed to payment'
+                            'Confirm Booking & proceed to payment'
                         )}
                     </Button>
                 ) : isBookingConfirmed ? (
