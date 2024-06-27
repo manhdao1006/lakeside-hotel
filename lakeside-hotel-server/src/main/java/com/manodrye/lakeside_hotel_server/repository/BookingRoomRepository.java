@@ -1,6 +1,7 @@
 package com.manodrye.lakeside_hotel_server.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,6 @@ public interface BookingRoomRepository extends JpaRepository<BookingRoomEntity, 
 
     List<BookingRoomEntity> findByRoomId(Long roomId);
     
-    BookingRoomEntity findByBookingConfirmationCode(String confirmationCode);
+    Optional<BookingRoomEntity> findByBookingConfirmationCode(String confirmationCode);
     
 }

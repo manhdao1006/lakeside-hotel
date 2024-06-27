@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
 import com.manodrye.lakeside_hotel_server.exception.InvalidBookingRequestException;
+import com.manodrye.lakeside_hotel_server.exception.ResourceNotFoundException;
 import com.manodrye.lakeside_hotel_server.repository.BookingRoomRepository;
 import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
 import com.manodrye.lakeside_hotel_server.service.IRoomService;
@@ -32,7 +33,8 @@ public class BookingRoomService implements IBookingRoomService{
 
     @Override
     public BookingRoomEntity findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRoomRepository.findByBookingConfirmationCode(confirmationCode);
+        return bookingRoomRepository.findByBookingConfirmationCode(confirmationCode)
+            .orElseThrow(() -> new ResourceNotFoundException("No booking found with booking code: " + confirmationCode));
     }
 
     @Override
