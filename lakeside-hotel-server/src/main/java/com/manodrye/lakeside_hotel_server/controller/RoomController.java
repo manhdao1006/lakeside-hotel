@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,7 +51,7 @@ public class RoomController {
     @PostMapping("/add/new-room")    
     public ResponseEntity<RoomDTO> addNewRoom(@RequestParam("photo") MultipartFile photo, 
                                               @RequestParam("roomType") String roomType, 
-                                              @RequestParam("roomPrice") BigDecimal roomPrice){
+                                              @RequestParam("roomPrice") BigDecimal roomPrice) {
         RoomEntity savedRoom = roomService.addNewRoom(photo, roomType, roomPrice);
         RoomDTO roomDTO = new RoomDTO(savedRoom.getId(), savedRoom.getRoomType(), savedRoom.getRoomPrice());
         
@@ -78,7 +80,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/delete/room/{roomId}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId){
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
         roomService.deleteRoom(roomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -100,12 +102,33 @@ public class RoomController {
     }
 
     @GetMapping("/room/{roomId}")
-    public ResponseEntity<Optional<RoomDTO>> getRoomById(@PathVariable Long roomId){
+    public ResponseEntity<Optional<RoomDTO>> getRoomById(@PathVariable Long roomId) {
         Optional<RoomEntity> theRoom = roomService.getRoomById(roomId);
         return theRoom.map(room -> {
             RoomDTO roomDTO = getRoomDTO(room);
             return ResponseEntity.ok(Optional.of(roomDTO));
         }).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+    }
+
+    public ResponseEntity<List<RoomDTO>> getAvailableRooms(@RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                            @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+                                                            @RequestParam("roomType") String roomType) {
+        List<RoomEntity> availableRooms = roomService.getAvailableRooms(checkInDate, checkOutDate, roomType);
+        List<RoomDTO> roomDTOs = new ArrayList<>();
+        for (RoomEntity roomEntity : availableRooms) {
+            byte[] photoBytes = roomService.getRoomPhotoByRoomId(roomEntity.getId());
+            if(photoBytes != null && photoBytes.length > 0) {
+                String photoBase64 = Base64.encodeBase64String(photoBytes);
+                RoomDTO roomDTO = getRoomDTO(roomEntity);
+                roomDTO.setPhoto(photoBase64);
+                roomDTOs.add(roomDTO);
+            }
+        }
+        if(roomDTOs.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(roomDTOs);
+        }
     }
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
