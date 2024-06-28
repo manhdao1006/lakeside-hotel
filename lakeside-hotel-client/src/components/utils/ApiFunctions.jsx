@@ -12,7 +12,7 @@ export async function addRoom(photo, roomType, roomPrice) {
   formData.append("roomPrice", roomPrice);
 
   const response = await api.post("/api/rooms/add/new-room", formData);
-  if(response.status === 201){
+  if (response.status === 201) {
     return true;
   } else {
     return false;
@@ -30,7 +30,7 @@ export async function getRoomTypes() {
 }
 
 // This function gets all rooms from the database
-export async function getAllRooms(){
+export async function getAllRooms() {
   try {
     const response = await api.get("/api/rooms/all-rooms");
     return response;
@@ -40,7 +40,7 @@ export async function getAllRooms(){
 }
 
 // This function deletes a room by Id
-export async function deleteRoom(roomId){
+export async function deleteRoom(roomId) {
   try {
     const response = await api.delete(`/api/rooms/delete/room/${roomId}`);
     return response;
@@ -50,7 +50,7 @@ export async function deleteRoom(roomId){
 }
 
 // This function updates a room by Id
-export async function updateRoom(roomId, roomData){
+export async function updateRoom(roomId, roomData) {
   const formData = new FormData();
   formData.append('roomType', roomData.roomType);
   formData.append('roomPrice', roomData.roomPrice);
@@ -61,7 +61,7 @@ export async function updateRoom(roomId, roomData){
 }
 
 // This function gets a room by Id
-export async function getRoomById(roomId){
+export async function getRoomById(roomId) {
   try {
     const response = await api.get(`/api/rooms/room/${roomId}`);
     return response;
@@ -71,12 +71,12 @@ export async function getRoomById(roomId){
 }
 
 // This function saves a new booking to the database
-export async function bookRoom(roomId, booking){
+export async function bookRoom(roomId, booking) {
   try {
     const response = await api.post(`/api/bookings/room/${roomId}/add-booking`, booking);
     return response;
   } catch (error) {
-    if(error.response && error.response.data){
+    if (error.response && error.response.data) {
       throw new Error(error.response.data);
     } else {
       throw new Error(`Error booking room: ${error.message}`);
@@ -85,7 +85,7 @@ export async function bookRoom(roomId, booking){
 }
 
 // This function gets all bookings from the database
-export async function getAllBookings(){
+export async function getAllBookings() {
   try {
     const response = await api.get('/api/bookings/all-bookings');
     return response;
@@ -95,12 +95,12 @@ export async function getAllBookings(){
 }
 
 // This function gets booking by the confirmation code
-export async function getBookingByConfirmationCode(confirmationCode){
+export async function getBookingByConfirmationCode(confirmationCode) {
   try {
     const response = await api.get(`/api/bookings/confirmation/${confirmationCode}`);
     return response;
   } catch (error) {
-    if(error.response && error.response.data){
+    if (error.response && error.response.data) {
       throw new Error(error.response.data);
     } else {
       throw new Error(`Error find booking: ${error.message}`);
@@ -109,11 +109,17 @@ export async function getBookingByConfirmationCode(confirmationCode){
 }
 
 // This function cancels booking
-export async function cancelBooking(bookingId){
+export async function cancelBooking(bookingId) {
   try {
     const response = await api.delete(`/api/bookings/booking/${bookingId}/delete`);
     return response;
   } catch (error) {
     throw new Error(`Error cancelling booking: ${error.message}`);
   }
+}
+
+// This function gets all available rooms from the database with a given date and a room type
+export async function getAvailableRooms(checkInDate, checkOutDate, roomType) { 
+  const response = await api.get(`/api/rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
+  return response;
 }

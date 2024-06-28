@@ -110,6 +110,7 @@ public class RoomController {
         }).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
     }
 
+    @GetMapping("/available-rooms")
     public ResponseEntity<List<RoomDTO>> getAvailableRooms(@RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                             @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
                                                             @RequestParam("roomType") String roomType) {
