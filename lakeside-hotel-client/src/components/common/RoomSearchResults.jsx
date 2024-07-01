@@ -8,7 +8,7 @@ const RoomSearchResults = ({ results, onClearSearch }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const resultsPerPage = 3;
-    const totalResults = results.length();
+    const totalResults = results.length;
     const totalPages = Math.ceil(totalResults / resultsPerPage);
 
     const handlePageChange = (pageNumber) => {
