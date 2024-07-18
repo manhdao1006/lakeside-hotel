@@ -10,7 +10,7 @@ import com.manodrye.lakeside_hotel_server.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long>{
 
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 
     void deleteByEmail(String email);
 

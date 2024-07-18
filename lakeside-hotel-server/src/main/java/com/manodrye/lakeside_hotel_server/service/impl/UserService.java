@@ -27,7 +27,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserEntity registerUser(UserEntity userEntity) {
-        if (userRepository.existByEmail(userEntity.getEmail())) {
+        if (userRepository.existsByEmail(userEntity.getEmail())) {
             throw new UserAlreadyExistsException(userEntity.getEmail() + " already exists");
         }
 
@@ -47,7 +47,10 @@ public class UserService implements IUserService {
     @Transactional
     @Override
     public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
+        UserEntity theUser = getUser(email);
+        if (theUser != null) {
+            userRepository.deleteByEmail(email);
+        }
     }
 
     @Override

@@ -32,6 +32,10 @@ public class RoleEntity {
     @ManyToMany(mappedBy = "roles")
     private Collection<UserEntity> users = new HashSet<>();
 
+    public RoleEntity(String name) {
+        this.name = name;
+    }
+
     public void assignRoleToUser(UserEntity userEntity) {
         userEntity.getRoles().add(this);
         this.getUsers().add(userEntity);
@@ -42,7 +46,7 @@ public class RoleEntity {
         this.getUsers().remove(userEntity);
     }
 
-    public void removeAllUserFromRole() {
+    public void removeAllUsersFromRole() {
         if (this.getUsers() != null) {
             List<UserEntity> roleUsers = this.getUsers().stream().toList();
             roleUsers.forEach(this :: removeUserFromRole);
