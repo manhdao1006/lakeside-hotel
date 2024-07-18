@@ -16,7 +16,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +39,6 @@ import com.manodrye.lakeside_hotel_server.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/rooms")
@@ -48,7 +47,8 @@ public class RoomController {
     private final IRoomService roomService;
     private final IBookingRoomService bookingRoomService;
 
-    @PostMapping("/add/new-room")    
+    @PostMapping("/add/new-room")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomDTO> addNewRoom(@RequestParam("photo") MultipartFile photo, 
                                               @RequestParam("roomType") String roomType, 
                                               @RequestParam("roomPrice") BigDecimal roomPrice) {
@@ -80,12 +80,14 @@ public class RoomController {
     }
 
     @DeleteMapping("/delete/room/{roomId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
         roomService.deleteRoom(roomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/update/room/{roomId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomDTO> updateRoom(@PathVariable Long roomId,
                                               @RequestParam(required = false) String roomType,
                                               @RequestParam(required = false) BigDecimal roomPrice,
