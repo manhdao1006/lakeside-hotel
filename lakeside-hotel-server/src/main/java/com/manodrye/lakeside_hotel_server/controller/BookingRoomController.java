@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.manodrye.lakeside_hotel_server.dto.BookingRoomDTO;
 import com.manodrye.lakeside_hotel_server.dto.RoomDTO;
@@ -21,8 +24,6 @@ import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
 import com.manodrye.lakeside_hotel_server.service.IRoomService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +33,8 @@ public class BookingRoomController {
     private final IBookingRoomService bookingRoomService;
     private final IRoomService roomService;
 
-    @GetMapping("/all-bookings")    
+    @GetMapping("/all-bookings")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")    
     public ResponseEntity<List<BookingRoomDTO>> getAllBookings(){
         List<BookingRoomEntity> bookingRoomEntities = bookingRoomService.getAllBookings();
         List<BookingRoomDTO> bookingRoomDTOs = new ArrayList<>();

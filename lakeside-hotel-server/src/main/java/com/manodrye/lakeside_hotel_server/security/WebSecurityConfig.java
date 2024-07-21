@@ -56,10 +56,9 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/api/rooms/**")
-                                            .permitAll()
-                                            .requestMatchers("/api/roles/**")
-                                            .hasRole("ADMIN")
+            .authorizeHttpRequests(auth -> auth
+                                            .requestMatchers("/api/auth/**", "/api/rooms/**")
+                                            .permitAll().requestMatchers("/api/roles/**").hasRole("ADMIN")
                                             .anyRequest()
                                             .authenticated());
 

@@ -25,17 +25,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.manodrye.lakeside_hotel_server.dto.BookingRoomDTO;
 import com.manodrye.lakeside_hotel_server.dto.RoomDTO;
 import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
-import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
-import com.manodrye.lakeside_hotel_server.service.IRoomService;
 import com.manodrye.lakeside_hotel_server.exception.PhotoRetrievalException;
 import com.manodrye.lakeside_hotel_server.exception.ResourceNotFoundException;
+import com.manodrye.lakeside_hotel_server.service.IBookingRoomService;
+import com.manodrye.lakeside_hotel_server.service.IRoomService;
 
 import lombok.RequiredArgsConstructor;
 

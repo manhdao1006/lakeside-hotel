@@ -1,7 +1,6 @@
 package com.manodrye.lakeside_hotel_server.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/register-user")
-    public ResponseEntity<?> registerUser(UserEntity user) {
+    public ResponseEntity<?> registerUser(@RequestBody UserEntity user) {
         try {
             userService.registerUser(user);
             return ResponseEntity.ok("Registration successful!");
@@ -54,7 +53,7 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities()
                                         .stream()
                                         .map(GrantedAuthority::getAuthority)
-                                        .collect(Collectors.toList());
+                                        .toList();
         
         return ResponseEntity.ok(new JwtResponse(
             userDetails.getId(),
