@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { cancelBooking, getBookingByConfirmationCode } from '../utils/ApiFunctions';
+import moment from 'moment';
 
 const FindBooking = () => {
 
@@ -103,12 +105,18 @@ const FindBooking = () => {
             ) : bookingInfo.bookingConfirmationCode ? (
                 <div className='col-md-6 mt-4 mb-5'>
                     <h3>Booking Information</h3>
-                    <p>Booking Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
+                    <p className="text-success">Confirmation Code: {bookingInfo.bookingConfirmationCode}</p>
                     <p>Booking ID: {bookingInfo.id}</p>
                     <p>Room Number: {bookingInfo.room.id}</p>
                     <p>Room Type: {bookingInfo.room.roomType}</p>
-                    <p>Check-in Date: {bookingInfo.checkInDate}</p>
-                    <p>Check-out Date: {bookingInfo.checkOutDate}</p>
+                    <p>
+                        Check-in Date:{" "}
+                        {moment(bookingInfo.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
+                    </p>
+                    <p>
+                        Check-out Date:{" "}
+                        {moment(bookingInfo.checkInDate).subtract(1, "month").format("MMM Do, YYYY")}
+                    </p>
                     <p>Full Name: {bookingInfo.guestFullName}</p>
                     <p>Email Address: {bookingInfo.guestEmail}</p>
                     <p>Adults: {bookingInfo.numOfAdults}</p>

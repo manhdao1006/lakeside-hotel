@@ -1,8 +1,17 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 
 export const api = axios.create({
   baseURL : "http://localhost:9192"
 })
+
+export const getHeader = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json"
+  }
+}
 
 // This function add room to the thee database
 export async function addRoom(photo, roomType, roomPrice) {
@@ -52,9 +61,9 @@ export async function deleteRoom(roomId) {
 // This function updates a room by Id
 export async function updateRoom(roomId, roomData) {
   const formData = new FormData();
-  formData.append('roomType', roomData.roomType);
-  formData.append('roomPrice', roomData.roomPrice);
-  formData.append('photo', roomData.photo);
+  formData.append("roomType", roomData.roomType);
+  formData.append("roomPrice", roomData.roomPrice);
+  formData.append("photo", roomData.photo);
 
   const response = await api.put(`/api/rooms/update/room/${roomId}`, formData);
   return response;
@@ -87,7 +96,7 @@ export async function bookRoom(roomId, booking) {
 // This function gets all bookings from the database
 export async function getAllBookings() {
   try {
-    const response = await api.get('/api/bookings/all-bookings');
+    const response = await api.get("/api/bookings/all-bookings");
     return response;
   } catch (error) {
     throw new Error(`Error fetching bookings: ${error.message}`);
@@ -122,4 +131,82 @@ export async function cancelBooking(bookingId) {
 export async function getAvailableRooms(checkInDate, checkOutDate, roomType) { 
   const response = await api.get(`/api/rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
   return response;
+}
+
+// This function register a new user
+export async function registerUser(registration) {
+  try {
+    const response = await api.post("/api/auth/register-user", registration);
+    return response;
+  } catch (error) {
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data);
+    } else {
+      throw new Error(`User registration error: ${error.message}`);
+    }
+  }
+}
+
+// This function login a registered user
+export async function loginUser(login) {
+  try {
+    const response = await api.post("/api/auth/login", login);
+    if (response.status >= 200 && response.status < 300) {
+      return response;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+// This is function to get the user profile
+export async function getUserProfile(userId, token) {
+  try {
+    const response = await api.get(`/api/users/profile/${userId}`, {
+      headers: getHeader()
+    });
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+// This is the function to delete a user
+export async function deleteUser(userId) {
+  try {
+    const response = await api.delete(`/api/users/delete/${userId}`, {
+      headers: getHeader()
+    });
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+// This is the function to get a single user
+export async function getUser(userId, token) {
+  try {
+    const response = await api.get(`/api/users/${userId}`, {
+      headers: getHeader()
+    });
+    return response;
+  } catch (error) {
+      return error.message;
+  }
+}
+
+// This is the function to get user bookings by the user id
+export async function getBookingsByUserId(userId, token) {
+  try {
+    const response = await api.get(`/api/bookings/user/${userId}/bookings`, {
+      headers: getHeader()
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching bookings: ', error.message);
+    throw new Error('Failed to fetch bookings');
+  }
 }

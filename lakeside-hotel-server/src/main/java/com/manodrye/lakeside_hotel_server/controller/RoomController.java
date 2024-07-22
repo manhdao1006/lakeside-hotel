@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.manodrye.lakeside_hotel_server.dto.BookingRoomDTO;
 import com.manodrye.lakeside_hotel_server.dto.RoomDTO;
 import com.manodrye.lakeside_hotel_server.entity.BookingRoomEntity;
 import com.manodrye.lakeside_hotel_server.entity.RoomEntity;
@@ -96,7 +97,7 @@ public class RoomController {
         RoomEntity roomEntity = roomService.updateRoom(roomId, roomType, roomPrice, photoBytes);
         roomEntity.setPhoto(photoBlob);
 
-        RoomDTO roomDTO = getRoomDTO(roomEntity);                                                
+        RoomDTO roomDTO = getRoomDTO(roomEntity);
         return ResponseEntity.ok(roomDTO);
 
     }
@@ -134,11 +135,11 @@ public class RoomController {
 
     private RoomDTO getRoomDTO(RoomEntity roomEntity) {
         List<BookingRoomEntity> bookingRoomEntities = bookingRoomService.getAllBookingsByRoomId(roomEntity.getId());
-        // List<BookingRoomDTO> bookingInfo = bookingRoomEntities.stream()
-        //                                                    .map(booking -> new BookingRoomDTO(booking.getBookingId(), 
-        //                                                                                     booking.getCheckInDate(), 
-        //                                                                                     booking.getCheckOutDate(), 
-        //                                                                                     booking.getBookingConfirmationCode())).toList();
+        List<BookingRoomDTO> bookingInfo = bookingRoomEntities.stream()
+                                                           .map(booking -> new BookingRoomDTO(booking.getBookingId(), 
+                                                                                            booking.getCheckInDate(), 
+                                                                                            booking.getCheckOutDate(), 
+                                                                                            booking.getBookingConfirmationCode())).toList();
         byte[] photoBytes = null;
         Blob photoBlob = roomEntity.getPhoto();
         if(photoBlob != null){

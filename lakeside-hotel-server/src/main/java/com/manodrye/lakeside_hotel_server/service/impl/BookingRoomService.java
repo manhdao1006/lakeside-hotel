@@ -83,4 +83,9 @@ public class BookingRoomService implements IBookingRoomService{
                                                             && bookingRoomEntity.getCheckOutDate().equals(bookingRoomEntity.getCheckInDate()))
                                     );
     }
+
+    @Override
+    public List<BookingRoomEntity> getBookingsByUserEmail(String email) {
+        return bookingRoomRepository.findByGuestEmail(email);
+    }
 }

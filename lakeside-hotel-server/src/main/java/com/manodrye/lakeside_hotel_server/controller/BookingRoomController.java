@@ -25,6 +25,7 @@ import com.manodrye.lakeside_hotel_server.service.IRoomService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/bookings")
@@ -74,6 +75,17 @@ public class BookingRoomController {
         bookingRoomService.cancelBooking(bookingId);
     }
 
+    @GetMapping("/user/{email}/bookings")
+    public ResponseEntity<List<BookingRoomDTO>> getBookingsByUserEmail(@PathVariable String email) {
+        List<BookingRoomEntity> bookings = bookingRoomService.getBookingsByUserEmail(email);
+        List<BookingRoomDTO> bookingRoomDTOs = new ArrayList<>();
+        for (BookingRoomEntity booking : bookings) {
+            BookingRoomDTO bookingRoomDTO = getBookingDTO(booking);
+            bookingRoomDTOs.add(bookingRoomDTO);
+        }
+        return ResponseEntity.ok(bookingRoomDTOs);
+    }
+    
     private BookingRoomDTO getBookingDTO(BookingRoomEntity bookingRoomEntity) {
         RoomEntity roomEntity = roomService.getRoomById(bookingRoomEntity.getRoom().getId()).get();
         RoomDTO roomDTO = new RoomDTO(roomEntity.getId(), roomEntity.getRoomType(), roomEntity.getRoomPrice());
